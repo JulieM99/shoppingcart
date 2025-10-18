@@ -26,11 +26,16 @@ public class ShoppingList {
     @Column(name="LIST_NAME")
     private String listName;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "SHOPPINGLIST_CATEGORY",
             joinColumns = @JoinColumn(name = "SHOPPINGLIST_ID"),
             inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
     )
     private List<Category> categoryList;
+
+
+    public void addCategory(Category category) {
+        this.categoryList.add(category);
+    }
 }

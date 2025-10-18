@@ -20,8 +20,6 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
-
-
     @Transactional
     public CreateCategoryResponse createCategory(@Valid CreateCategoryRequest request) {
         Category newCategory = categoryMapper.toEntity(request);

@@ -25,7 +25,6 @@ public class Category {
     @Column(name = "CATEGORY_NAME")
     private String categoryName;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CATEGORY_ID")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Product> productList;
 }

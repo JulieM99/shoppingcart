@@ -1,6 +1,9 @@
 package com.example.shoppingcart.product;
 
+import com.example.shoppingcart.category.Category;
 import jakarta.persistence.*;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,4 +30,8 @@ public class Product {
 
     @Column(name = "PRODUCT_PRICE")
     private Double productPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID", nullable = false)
+    private Category category;
 }
