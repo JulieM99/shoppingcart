@@ -1,0 +1,145 @@
+DROP SCHEMA IF EXISTS `SHOPPINGCART`;
+
+CREATE SCHEMA `SHOPPINGCART`;
+
+USE `SHOPPINGCART`;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+CREATE TABLE `USER` (
+  `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `FIRST_NAME` VARCHAR(45) NOT NULL,
+  `LAST_NAME` VARCHAR(45) NOT NULL,
+  `EMAIL` VARCHAR(45) NOT NULL,
+  `USER_PASSWORD` VARCHAR(255) NOT NULL,
+  `ROLE` VARCHAR(20) NOT NULL,
+  CHECK (Email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+);
+
+CREATE TABLE `SHOPPING_LIST` (
+  `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `LIST_NAME` varchar(128) NOT NULL
+);
+
+CREATE TABLE `SHOPPINGLIST_USER` (
+  `USER_ID` INT NOT NULL,
+  `SHOPPINGLIST_ID` INT NOT NULL,
+  PRIMARY KEY (`USER_ID`,`SHOPPINGLIST_ID`),
+  CONSTRAINT `FK_USER` FOREIGN KEY (`USER_ID`) 
+  REFERENCES `USER` (`ID`) 
+  ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SHOPPINGLIST` FOREIGN KEY (`SHOPPINGLIST_ID`) 
+  REFERENCES `SHOPPING_LIST` (`ID`) 
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+CREATE TABLE `CATEGORY` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `CATEGORY_NAME` VARCHAR(128) NOT NULL,
+  PRIMARY KEY (`ID`)
+);
+
+
+CREATE TABLE `SHOPPINGLIST_CATEGORY` (
+  `SHOPPINGLIST_ID` INT NOT NULL,
+  `CATEGORY_ID` INT NOT NULL,
+  PRIMARY KEY (`SHOPPINGLIST_ID`,`CATEGORY_ID`),
+  CONSTRAINT `FK_SHOPPINGLIST_1` FOREIGN KEY (`SHOPPINGLIST_ID`) 
+  REFERENCES `SHOPPING_LIST` (`ID`) 
+  ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CATEGORY_1` FOREIGN KEY (`CATEGORY_ID`) 
+  REFERENCES `CATEGORY` (`ID`) 
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+CREATE TABLE `PRODUCT` (
+  `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `PRODUCT_NAME` VARCHAR(256) NOT NULL,
+  `PRODUCT_AMOUNT` INT DEFAULT NULL,
+  `PRODUCT_PRICE` INT DEFAULT NULL,
+  `CATEGORY_ID` INT NOT NULL,
+  KEY `FK_CATEGORY_id` (`CATEGORY_ID`),
+  CONSTRAINT `FK_CATEGORY` 
+  FOREIGN KEY (`CATEGORY_ID`) 
+  REFERENCES `CATEGORY` (`ID`) 
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO `USER` (`FIRST_NAME`, `LAST_NAME`, `EMAIL`, `USER_PASSWORD`, `ROLE`) VALUES
+('Michael', 'Johnson', 'michael.johnson@example.com', '1', 'ROLE_USER'),
+('Emily', 'Brown', 'emily.brown@example.com', '1', 'ROLE_USER'),
+('Daniel', 'Martinez', 'daniel.martinez@example.com', '1', 'ROLE_USER'),
+('Olivia', 'Wilson', 'olivia.wilson@example.com', '1', 'ROLE_USER'),
+('William', 'Taylor', 'william.taylor@example.com', '1', 'ROLE_USER');
+
+INSERT INTO `CATEGORY` (`CATEGORY_NAME`) VALUES
+('Dairy'),
+('Bread'),
+('Vegetables'),
+('Fruits'),
+('Meat'), 
+('Accessories');
+
+-- Additional products for category 'Diary'
+INSERT INTO `PRODUCT` (`PRODUCT_NAME`, `CATEGORY_ID`) VALUES
+('Cheese', 1),
+('Butter', 1),
+('Eggs', 1),
+('Cream', 1),
+('Yogurt Drink', 1);
+
+-- Additional products for category 'Bread'
+INSERT INTO `PRODUCT` (`PRODUCT_NAME`, `CATEGORY_ID`) VALUES
+('Whole Wheat Bread', 2),
+('Croissants', 2),
+('Rolls', 2),
+('Sourdough Bread', 2),
+('Multigrain Bread', 2);
+
+-- Additional products for category 'Vegetables'
+INSERT INTO `PRODUCT` (`PRODUCT_NAME`, `CATEGORY_ID`) VALUES
+('Tomatoes', 3),
+('Cucumbers', 3),
+('Carrots', 3),
+('Bell Peppers', 3),
+('Lettuce', 3);
+
+-- Additional products for category 'Fruits'
+INSERT INTO `PRODUCT` (`PRODUCT_NAME`, `CATEGORY_ID`) VALUES
+('Apples', 4),
+('Bananas', 4),
+('Oranges', 4),
+('Grapes', 4),
+('Strawberries', 4);
+
+-- Additional products for category 'Meat'
+INSERT INTO `PRODUCT` (`PRODUCT_NAME`, `CATEGORY_ID`) VALUES
+('Chicken Breast', 5),
+('Ground Beef', 5),
+('Pork Chops', 5),
+('Bacon', 5),
+('Sausages', 5);
+
+
+INSERT INTO `SHOPPING_LIST` (`LIST_NAME`) VALUES
+('Lista 1'),
+('Lista zakupow'),
+('Lista zakupow 2');
+
+INSERT INTO `SHOPPINGLIST_USER` ( `USER_ID`, `SHOPPINGLIST_ID`) VALUES
+(1, 1),
+(1, 2),
+(2, 1);
+
+INSERT INTO `SHOPPINGLIST_CATEGORY` (`CATEGORY_ID`, `SHOPPINGLIST_ID`) VALUES
+(1, 1),
+(2, 1), 
+(4, 1),
+(5, 1),
+(1, 2),
+(3, 2), 
+(4, 2), 
+(5, 3);
