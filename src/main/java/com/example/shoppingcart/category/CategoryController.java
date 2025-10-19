@@ -104,4 +104,10 @@ public class CategoryController {
         return ResponseEntity.ok().build();
     }
 
+//    @PostMapping("/{id}/products")
+//    public ResponseEntity<Void> addProduct(@PathVariable Integer id, @Valid @RequestBody AddProductRequest request) {
+//
+//    }
+
+
 }

@@ -1,4 +1,9 @@
 package com.example.shoppingcart.user.authentication;
 
-public class RegisterResponse {
+import com.example.shoppingcart.user.dto.UserDto;
+
+public record RegisterResponse (
+        String token,
+        UserDto user
+){
 }

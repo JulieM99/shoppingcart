@@ -1,0 +1,10 @@
+package com.example.shoppingcart.error;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
+
+public record ApiError(String path, String message, int statusCode,
+                       @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") LocalDateTime localDateTime) {
+
+}

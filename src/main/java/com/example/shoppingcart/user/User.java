@@ -29,7 +29,7 @@ public class User {
     private String firstName;
 
     @Column(name = "LAST_NAME")
-    private String LastName;
+    private String lastName;
 
     @Column(name = "EMAIL")
     private String email;
@@ -48,6 +48,6 @@ public class User {
 
     @Column(name = "ROLE")
     @Enumerated(EnumType.STRING)
-    private Role Role;
+    private Role role;
 
 }

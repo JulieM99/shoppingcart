@@ -1,7 +1,6 @@
 package com.example.shoppingcart.shoppinglist;
 
 import com.example.shoppingcart.category.dto.AddCategoryRequest;
-import com.example.shoppingcart.product.dto.ProductResponse;
 import com.example.shoppingcart.shoppinglist.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -103,7 +102,7 @@ public class ShoppingListController {
     }
 
     @PostMapping("/{id}/categories")
-    public ResponseEntity<?> addCategoryToList(@PathVariable Integer id, @RequestBody AddCategoryRequest request) {
+    public ResponseEntity<?> addCategoryToList(@PathVariable Integer id, @Valid @RequestBody AddCategoryRequest request) {
         shoppingListService.addCategoryToShoppingList(id, request.categoryId());
         return ResponseEntity.ok().build();
     }
